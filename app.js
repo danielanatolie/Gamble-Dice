@@ -8,42 +8,52 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var score, roundScore, activePlayer, dice; 
-
-//Hide the dice at the beginning of the game:
-document.querySelector('.dice').style.dispaly = 'none';
+var score, roundScore, activePlayer; 
 
 score = [0,0]; //Player's scores 
-roundScore = 0; //Total points a player accumulated 
+roundScore = 0; //Total points a player accumulated during his round
 activePlayer = 0; 
 
+//Initialize all current scores to 0:
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
 
+//Hide the dice at the beginning of the game:
+document.querySelector('.dice').style.display = 'none';
 
-// Generate a number between 1 and 6
-dice = Math.floor(Math.random() * 6) + 1 
-if(dice == 1) {
-    roundScore = 0;
-    if(activePlayer = 0) {
-        activePlayer = 1;
-        roundScore = 0;
-    } else {
-        activePlayer = 0;
-        roundScore = 0;
-    }
-} else {
-    roundScore += dice;
-}
-
-
-// Access a specific part of the HTML page (the current score of player 1)
-document.querySelector('#current-'+activePlayer).textContent = dice; 
-
-var x = document.querySelector('#score-0').textContent; 
-console.log(x);
+document.querySelector('.btn-roll').addEventListener('click', function() {
+    // Generate a number between 1 and 6
+var dice = Math.floor(Math.random() * 6) + 1;
+    //Display our dice result:
+    var diceDOM = document.querySelector('.dice')
+    diceDOM.style.display = 'block';
+    diceDOM.src = "dice-"+dice+".png";
     
+    //Update scores:
+    if(dice === 1) {
+        roundScore = 0;
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+        
+        //We need the CSS styling to change for the current active player (more gray background and read dot!)
+        document.querySelector('.player-0-panel').classList.toggle('active'); //If not removed, remove active otherwise add it back in
+        document.querySelector('.player-1-panel').classList.toggle('active'); // Same as above (therefore only one active player is here at a time)
+        
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;  
+        
+        document.querySelector('.dice').style.display='none';
+        
+        
+    } else {
+        roundScore += dice; 
+        document.querySelector('#current-'+activePlayer).textContent = roundScore;
+    }
+    
+});
 
 
-//Function after roll-dice stopped:
-score[activePlayer] += roundScore;
+
 
 
