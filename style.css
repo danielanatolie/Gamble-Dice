@@ -19,6 +19,10 @@
 .final-score:focus {
     outline: none;
 }
+
+/* modification 3: */
+#dice-1 {top: 120px;}
+#dice-2 {top: 250px;}
 /* --------------- */
 
 
