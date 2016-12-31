@@ -1,9 +1,10 @@
-/*
-MODIFICATION 1:
-- A player looses his ENTIRE score when he rolls two 6 in a row. After that, it's the next player's turn
+ /*
+MODIFICATION 2:
+- Add an input field to the HTML where players can set the winning score, so that they can change the predefined score of 100.
 */
-var score, roundScore, activePlayer, goal, gamePlaying, prevRoll; 
-goal = 25;
+var score, roundScore, activePlayer, goal, gamePlaying; 
+
+
 initializeScores();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
@@ -15,22 +16,15 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         diceDOM.style.display = 'block';
         diceDOM.src = "dice-"+dice+".png";
     
-        //Mod condition:
-        if(prevRoll === 6 && dice === 6) {
-            scores[activePlayer] = 0;
-            document.querySelector('#score-'+activePlayer).textContent = '0';
+        //Update scores:
+        if(dice === 1) {
+            roundScore = 0;
             updateActivePlayer();
+        
         } else {
-               //Update scores:
-            if(dice === 1) {
-                roundScore = 0;
-                updateActivePlayer();
-            } else {
-                roundScore += dice; 
-                document.querySelector('#current-'+activePlayer).textContent = roundScore;
-            }
+            roundScore += dice; 
+            document.querySelector('#current-'+activePlayer).textContent = roundScore;
         }
-        prevRoll = dice; 
     }
 });
 
@@ -41,6 +35,9 @@ document.querySelector(".btn-hold").addEventListener('click', function() {
         roundScore = 0;
         //Update UI
         document.getElementById('score-'+activePlayer).textContent = score[activePlayer];
+        goal = document.querySelector('.final-score').value;
+        console.log(goal);
+        
         if(score[activePlayer] >= goal) {
             document.querySelector('#name-'+activePlayer).textContent = 'Winner!';
             //Update UI
@@ -101,3 +98,5 @@ function initializeScores() {
 
 
 
+  
+     
